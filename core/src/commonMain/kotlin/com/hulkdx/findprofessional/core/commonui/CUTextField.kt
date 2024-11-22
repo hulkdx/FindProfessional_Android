@@ -28,18 +28,45 @@ fun CUTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     enabled: Boolean = true,
 ) {
-    TextField(
+    CUTextField(
         modifier = modifier,
         value = value,
-        onValueChange = onValueChanged,
+        onValueChanged = onValueChanged,
         singleLine = singleLine,
-        shape = RoundedCornerShape(8.dp),
         placeholder = {
             Text(
                 text = hint,
                 style = body1,
             )
         },
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        enabled = enabled,
+    )
+}
+
+@Composable
+fun CUTextField(
+    modifier: Modifier = Modifier,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    placeholder:  @Composable (() -> Unit)? = null,
+    label: @Composable (() -> Unit)? = null,
+    value: String,
+    onValueChanged: (String) -> (Unit),
+    singleLine: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    enabled: Boolean = true,
+) {
+    TextField(
+        modifier = modifier,
+        value = value,
+        onValueChange = onValueChanged,
+        singleLine = singleLine,
+        shape = RoundedCornerShape(8.dp),
+        placeholder = placeholder,
+        label = label,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.White,

@@ -20,7 +20,7 @@ class ProProfileViewModel(
     private val navigator: Navigator,
     getProUserUseCase: GetProUserUseCase,
 ) : ViewModel() {
-    val uiState = getProUserUseCase.getUser()
+    val uiState = getProUserUseCase.getUserFlow()
         .filterNotNull()
         .map {
             UiState(

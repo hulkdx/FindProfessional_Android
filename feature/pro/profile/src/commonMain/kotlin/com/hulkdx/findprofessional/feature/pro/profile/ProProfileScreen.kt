@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.hulkdx.findprofessional.core.commonui.CUAsyncImage
@@ -31,11 +29,8 @@ import com.hulkdx.findprofessional.core.commonui.navbar.ProAppNavBarContainer
 import com.hulkdx.findprofessional.core.resources.Res
 import com.hulkdx.findprofessional.core.resources.editProfile
 import com.hulkdx.findprofessional.core.resources.logout
-import com.hulkdx.findprofessional.core.theme.body1
 import com.hulkdx.findprofessional.core.theme.body1Medium
 import com.hulkdx.findprofessional.core.theme.body2
-import com.hulkdx.findprofessional.core.theme.h1
-import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.androidx.compose.koinViewModel
 
@@ -83,15 +78,15 @@ private fun ProProfileScreenContent(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = CenterHorizontally,
     ) {
-        ProfileImage(profileImageUrl)
-        ProfileName(name)
+        ProProfileImage(profileImageUrl)
+        ProProfileName(name)
         ProfileItem(stringResource(Res.string.editProfile), onEditProfileClicked)
         ProfileItem(stringResource(Res.string.logout), onLogoutClicked)
     }
 }
 
 @Composable
-private fun ProfileImage(url: String) {
+internal fun ProProfileImage(url: String) {
     CUAsyncImage(
         modifier = Modifier
             .padding(top = 53.dp)
@@ -102,7 +97,7 @@ private fun ProfileImage(url: String) {
 }
 
 @Composable
-private fun ProfileName(name: String) {
+internal fun ProProfileName(name: String) {
     Text(
         modifier = Modifier.padding(top = 8.dp, bottom = 32.dp),
         text = name,
