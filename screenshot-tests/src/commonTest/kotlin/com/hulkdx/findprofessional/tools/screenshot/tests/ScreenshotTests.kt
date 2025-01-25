@@ -130,6 +130,7 @@ class ScreenshotTests {
         screenShotTests(className, "bookingSummeryScreen") {
             BookingSummeryScreen(
                 error = "",
+                onCheckoutClicked = {},
                 onErrorDismissed = {},
                 uiState = BookingSummeryUiState(
                     userSkypeId = "test@gmail.com", times = listOf(
