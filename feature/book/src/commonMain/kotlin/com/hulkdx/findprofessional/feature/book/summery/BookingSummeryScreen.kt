@@ -60,6 +60,7 @@ fun BookingSummeryScreen(
 
     BookingSummeryScreen(
         uiState = uiState ?: return,
+        onCheckoutClicked = viewModel::onCheckoutClicked,
         error = error?.localized(),
         onErrorDismissed = { viewModel.setError(null) }
     )
@@ -68,6 +69,7 @@ fun BookingSummeryScreen(
 @Composable
 fun BookingSummeryScreen(
     uiState: BookingSummeryUiState,
+    onCheckoutClicked: () -> Unit,
     error: String?,
     onErrorDismissed: () -> Unit,
 ) {
@@ -84,13 +86,13 @@ fun BookingSummeryScreen(
             items(uiState.times) {
                 TimeItem(it)
             }
-            item { Connection(uiState.userSkypeId) }
+            item { ConnectionSection(uiState.userSkypeId) }
         }
         CUBackButton(modifier = Modifier.align(Alignment.TopStart))
         Bottom(
             modifier = Modifier.align(Alignment.BottomStart),
             totalPrices = uiState.totalPrices,
-            onCheckoutClicked = {},
+            onCheckoutClicked = onCheckoutClicked,
         )
         CUSnackBar(
             modifier = Modifier.align(Alignment.BottomCenter),
@@ -154,7 +156,7 @@ private fun TimeItem(data: BookingSummeryUiState.Time) {
 }
 
 @Composable
-private fun Connection(skypeId: String?) {
+private fun ConnectionSection(skypeId: String?) {
     Column {
         Text(
             modifier = Modifier
@@ -165,30 +167,34 @@ private fun Connection(skypeId: String?) {
             text = stringResource(Res.string.connection),
             style = body1Medium,
         )
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 26.dp)
-                .padding(top = 8.dp)
-                .background(MaterialTheme.colorScheme.surfaceVariant)
-                .fillMaxWidth()
-                .padding(16.dp),
-        ) {
-            Text(
-                text = stringResource(Res.string.yourSkypeId),
-                style = body2,
-            )
-            Spacer(Modifier.weight(2F))
-            Text(
-                // TODO: what should happen if id is null
-                text = skypeId ?: "",
-                style = body2,
-            )
-            Spacer(Modifier.weight(1F))
-            Image(
-                painter = painterResource(Res.drawable.ic_edit_request),
-                contentDescription = null
-            )
-        }
+        SkypeId(skypeId)
+    }
+}
+
+@Composable
+private fun SkypeId(skypeId: String?) {
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 26.dp)
+            .padding(top = 8.dp)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .fillMaxWidth()
+            .padding(16.dp),
+    ) {
+        Text(
+            text = stringResource(Res.string.yourSkypeId),
+            style = body2,
+        )
+        Spacer(Modifier.weight(2F))
+        Text(
+            text = skypeId ?: "",
+            style = body2,
+        )
+        Spacer(Modifier.weight(1F))
+        Image(
+            painter = painterResource(Res.drawable.ic_edit_request),
+            contentDescription = null
+        )
     }
 }
 
@@ -241,6 +247,7 @@ private fun BookingSummeryScreenPreview() {
         BookingSummeryScreen(
             error = "",
             onErrorDismissed = {},
+            onCheckoutClicked = {},
             uiState = BookingSummeryUiState(
                 userSkypeId = "test@gmail.com",
                 times = listOf(
